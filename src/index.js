@@ -1,7 +1,10 @@
 const Koa = require('koa');
+const json = require('koa-json');
 const app = new Koa();
 
 const actionHandlers = require('../../pizzabot/src/pizza/action-handlers');
+
+app.use(json());
 
 app.use(async (ctx) => {
   try {
