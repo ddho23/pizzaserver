@@ -1,16 +1,22 @@
 const Koa = require('koa');
 const json = require('koa-json');
 const http = require('http');
+const logger = require('koa-logger');
+const bodyParser = require('koa-bodyparser');
 
 const actionHandlers = require('../../pizzabot/src/pizza/action-handlers');
 
 const app = new Koa();
 
-app.use(json());
+app
+  .use(logger())
+  .use(bodyParser())
+  .use(json());
 
 app.use(async (ctx) => {
   try {
-    const result = actionHandlers.getResult(req);
+    console.log(ctx.request);
+    const { result } = ctx.request.body;
     const { action } = result;
   
     if (action === 'RequestPrice') {
@@ -22,7 +28,7 @@ app.use(async (ctx) => {
     }
   } catch (err) {
     ctx.status = 500;
-    ctx.body = { err };
+    ctx.body = { err: `${err}` };
   }
 });
 
