@@ -15,7 +15,6 @@ app
 
 app.use(async (ctx) => {
   try {
-    console.log(ctx.request);
     const { result } = ctx.request.body;
     const { action } = result;
   
